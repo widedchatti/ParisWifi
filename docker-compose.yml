@@ -1,6 +1,8 @@
-version: '3'
+version: '3.8'
+
 services:
-  mongodb:
+  # MongoDB service
+  my-mongodb:
     image: mongo:latest
     container_name: my-mongodb
     ports:
@@ -8,15 +10,24 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
+    networks:
+      - my-network
 
-  flask-app:
+  # Flask app service
+  my-flask-app:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: my-flask-app
     ports:
-      - "8000:8000"
-    depends_on:
-      - mongodb
+      - "8080:8080"
     environment:
-      MONGO_URI: "mongodb://root:example@mongodb:27017/paris_wifi_database" 
+      MONGO_URI: "mongodb://root:root@my-mongodb:27017/"
+    depends_on:
+      - my-mongodb
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge

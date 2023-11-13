@@ -1,3 +1,5 @@
+#Ce fichier est optionnel j'ai juste essayer avec les biblio python pour faire quelques analyses et visualisations des données et les enregistrer sous format png sous le folder /static
+#J'ai aussi crée une carte en utilisant Folium 
 # Import des bibliothèques
 import pandas as pd
 import seaborn as sns
@@ -61,19 +63,7 @@ def analyze_and_visualize(data):
     plt.ylabel('Nombre de bornes WiFi')
     plt.savefig(os.path.join(static_folder, 'densite_bornes_wifi_quartier_plot.png'))
 
-    # Corrélation entre la densité de bornes WiFi et d'autres caractéristiques
-    selected_columns = ['nombre_de_borne_wifi']  # Ajoutez les colonnes réelles présentes dans votre ensemble de données
-    corr_df = df[selected_columns]
-    correlation_matrix = corr_df.corr()
-
-    # Vérifiez la matrice de corrélation
-    print(correlation_matrix)
-
-    plt.figure(figsize=(10, 8))
-    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")
-    plt.title('Matrice de corrélation')
-    plt.savefig(os.path.join(static_folder, 'correlation_matrix_plot.png'))
-
+    
     # Créer une carte avec Folium (commentez cette partie si elle provoque des erreurs)
     wifi_map = folium.Map(location=[48.8566, 2.3522], zoom_start=12, tiles='OpenStreetMap')
 
